@@ -1,0 +1,140 @@
+﻿@using EstateAgency.ViewModel;
+
+@model EstateObjectViewModel
+
+@{
+    ViewBag.Title = "Details Of Student";
+}
+
+@*@model EstateAgency.Models.EstateAgency.EstateObject
+
+    @{
+        ViewBag.Title = "DetailsEstateObject";
+    }*@
+
+<h2>Информация</h2>
+
+<div>
+    <h4>Объект недвижимости</h4>
+    <hr />
+
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RealtyType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RealtyType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TradeType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TradeType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.District)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.District)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Area)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Area)
+        </dd>
+
+        @if (Model.RealtyTypeId == 1 || Model.RealtyTypeId == 3)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Rooms)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Rooms)
+            </dd>
+        }
+
+        @if (Model.RealtyTypeId == 3)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.LandDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LandDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LandArea)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LandArea)
+            </dd>
+        }
+
+    </dl>
+
+    <h5>Фото: </h5>
+
+    <table>
+        <tr>
+            @foreach (var item in Model.Pictures)
+            {
+
+                <td>  </td>
+                <td>
+                    @Html.Raw("<img style='width:100px; height:100px;' src=\"data:image/jpeg;base64,"
+                         + Convert.ToBase64String(item.Path) + "\" />")
+                </td>
+                <td>  </td>
+            }
+        </tr>
+    </table>
+
+</div>
+<p>
+    @Html.ActionLink("Изменить", "UpdateEstateObject", new { id = Model.Id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>

@@ -1,0 +1,120 @@
+﻿@using EstateAgency.ViewModel;
+
+@model EstateObjectViewModel
+
+@{
+    ViewBag.Title = "DeleteEstateObject";
+}
+
+<h2>Удаление объекта недвижимости</h2>
+
+<h3>Вы уверены, что хотите удалить следующий объект недвижимости?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.District)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.District)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RealtyType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RealtyType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TradeType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TradeType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Area)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Area)
+        </dd>
+
+        @if (Model.RealtyTypeId == 1 || Model.RealtyTypeId == 3)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Rooms)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Rooms)
+            </dd>
+        }
+
+        @if (ViewBag.RealtyTypeId == 3)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.LandDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LandDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LandArea)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LandArea)
+            </dd>
+        }
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index")
+        </div>
+    }
+</div>
