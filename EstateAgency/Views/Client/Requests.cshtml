@@ -3,12 +3,11 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
 <h2>Каталог объектов недвижимости</h2>
 
-@Html.ActionLink("Добавить объект", "StartAddEstateObject")
 
 <table class="table">
     <tr>
@@ -42,16 +41,16 @@
                 @Html.DisplayFor(m => e.Address)
             </td>
             <td>
-                @Html.ActionLink("Изменить", "UpdateEstateObject", new { id = e.Id })
-                @Html.ActionLink("Удалить", "DeleteEstateObject", new { id = e.Id })
-                @Html.ActionLink("Подробнее", "DetailsEstateObject", new { id = e.Id })
-
+                @Html.ActionLink("Отменить", "DeleteRequest", new { id = e.Id })
             </td>
         </tr>
     }
 
 </table>
-@Html.ActionLink("Фильтр", "Filter")
+@Html.ActionLink("Назад", "Index")
+
+
+
 
 
 

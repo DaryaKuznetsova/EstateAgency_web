@@ -1,15 +1,15 @@
-﻿@using EstateAgency.ViewModel;
+﻿@using EstateAgency.ViewModels;
 
-@model EstateObjectViewModel
+@model TradeRequestViewModel
 
 @{
-    ViewBag.Title = "DeleteEstateObject";
-    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+    ViewBag.Title = "ViewTrade";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
-<h2>Удаление объекта недвижимости</h2>
+<h2>Сделка</h2>
 
-<h3>Вы уверены, что хотите удалить следующий объект недвижимости?</h3>
+<h3>Информация</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -108,14 +108,38 @@
         }
 
     </dl>
+    <hr />
+    <h3>Связаться с Менеджером</h3>
+    <dl>
+        <dd>
+            @Html.DisplayFor(model => model.ManagerName)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.ManagerEmail)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.ManagerId)
+        </dd>
+    </dl>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+    <hr />
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад", "Index")
-        </div>
-    }
+    <h3>Способ оплаты: </h3>
+
+    <dl>
+        <dd>
+            @Html.DisplayFor(model => model.PaymentType)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.PaymentInstrument)
+        </dd>
+    </dl>
+
+    @Html.HiddenFor(model => model.EstateObjectId)
+
+    @Html.ActionLink("Назад", "Trades")
 </div>
+
+
+
+

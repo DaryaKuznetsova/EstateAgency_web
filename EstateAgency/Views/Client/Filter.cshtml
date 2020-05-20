@@ -1,8 +1,10 @@
 ﻿@model EstateAgency.ViewModel.FilterViewModel
-    
-@{ 
-    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
+
 @using (Html.BeginForm())
 {
     <div class="form-group">
@@ -64,6 +66,8 @@
 
     <input type="submit" value="OK" />
 }
-    <div>
-        @Html.ActionLink("Назад", "Index")
-    </div>
+<div>
+    @Html.ActionLink("Назад", "Index")
+</div>
+
+

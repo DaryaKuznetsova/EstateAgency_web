@@ -3,23 +3,29 @@
 @model EstateObjectViewModel
 
 @{
-    ViewBag.Title = "Details EstateObject";
-    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+    ViewBag.Title = "Buy";
 }
 
-@*@model EstateAgency.Models.EstateAgency.EstateObject
-
-    @{
-        ViewBag.Title = "DetailsEstateObject";
-    }*@
-
-<h2>Информация</h2>
+<h2>Объект недвижимости</h2>
 
 <div>
-    <h4>Объект недвижимости</h4>
     <hr />
-
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.District)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.District)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.RealtyType)
@@ -51,22 +57,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.District)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.District)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Owner)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Owner)
         </dd>
 
         <dt>
@@ -117,25 +107,16 @@
 
     </dl>
 
-    <h5>Фото: </h5>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    <table>
-        <tr>
-            @foreach (var item in Model.Pictures)
-            {
-
-                <td>  </td>
-                <td>
-                    @Html.Raw("<img style='width:100px; height:100px;' src=\"data:image/jpeg;base64,"
-                         + Convert.ToBase64String(item.Path) + "\" />")
-                </td>
-                <td>  </td>
-            }
-        </tr>
-    </table>
-
+        <div class="form-actions no-color">
+            <input type="submit" value="Купить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index")
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Изменить", "UpdateEstateObject", new { id = Model.Id }) |
-    @Html.ActionLink("Назад", "Index")
-</p>
+
+
+

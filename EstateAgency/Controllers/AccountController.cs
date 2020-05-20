@@ -37,7 +37,7 @@ namespace EstateAgency.Controllers
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(user.Id.ToString(), true);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Client");
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace EstateAgency.Controllers
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(user.Id.ToString(), true);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "EstateObject");
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace EstateAgency.Controllers
                     if (user != null)
                     {
                         FormsAuthentication.SetAuthCookie(user.Id.ToString(), true);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Client");
                     }
                 }
                 else
@@ -126,7 +126,7 @@ namespace EstateAgency.Controllers
                     if (user != null)
                     {
                         FormsAuthentication.SetAuthCookie(user.Id.ToString(), true);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "EstateObject");
                     }
                 }
                 else
@@ -140,7 +140,7 @@ namespace EstateAgency.Controllers
         public ActionResult Logoff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
     }
 }

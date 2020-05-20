@@ -19,15 +19,16 @@ namespace EstateAgency
             _estateObjects = new List<EstateObject>();
         }
 
-        public async Task<List<EstateObject>> GetEstateObjects()
-        {
-            var result = new List<EstateObject>();
-
+        public async Task<List<EstateObject>> GetEstateObjects(int status=1)
+        {          
             using (var db = new Agency())
             {
-                result = await db.EstateObjects.ToListAsync();
+                var result = from EstateObject
+                             in db.EstateObjects
+                             where EstateObject.StatusId == status
+                             select EstateObject;
+                return await result.ToListAsync();
             }
-            return result;
         }
 
         public async Task<EstateObject> GetEstateObject(int id)

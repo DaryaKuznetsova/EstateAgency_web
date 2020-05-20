@@ -4,12 +4,11 @@
 
 @{
     ViewBag.Title = "DeleteEstateObject";
-    Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>Удаление объекта недвижимости</h2>
+<h2>Удаление сделки</h2>
 
-<h3>Вы уверены, что хотите удалить следующий объект недвижимости?</h3>
+<h3>Вы уверены, что не хотите заключать сделку?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -115,7 +114,9 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад", "Index")
+            @Html.ActionLink("Назад", "AcceptedRequests")
         </div>
     }
 </div>
+
+

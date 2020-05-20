@@ -4,12 +4,11 @@
 
 @{
     ViewBag.Title = "DeleteEstateObject";
-    Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>Удаление объекта недвижимости</h2>
+<h2>Отмена заявки</h2>
 
-<h3>Вы уверены, что хотите удалить следующий объект недвижимости?</h3>
+<h3>Вы уверены, что хотите отменить заявку?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -114,8 +113,10 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад", "Index")
+            <input type="submit" value="Отменить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Requests")
         </div>
     }
 </div>
+
+

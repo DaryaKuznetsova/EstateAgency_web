@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Авторизация";
+    Layout = "~/Views/Shared/_LayoutStart.cshtml";
 }
 
 <h2>Авторизация менеджера</h2>
@@ -41,6 +42,9 @@
 
 <div>
     @Html.ActionLink("Назад", "Login", Model)
+</div>
+<div>
+    @Html.ActionLink("Зарегистрироваться", "Register", Model)
 </div>
 
 @section Scripts {

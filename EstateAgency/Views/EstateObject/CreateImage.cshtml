@@ -1,25 +1,28 @@
 ﻿
 @{
     ViewBag.Title = "CreateImage";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>CreateImage</h2>
+<h2>Добавить изображение</h2>
 
 @using (Html.BeginForm("CreateImage", "EstateObject", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Добавить изображение</legend>
 
-        <div class="editor-label">Файл изображения</div>
-        <div class="editor-field">
+    <dl class="dl-horizontal">
+
+        <dt class="editor-label"> Файл изображения </dt>
+
+        <dd class="editor-field">
             <input type="file" name="uploadImage" />
-        </div>
+        </dd>
 
-        <p>
-            <input type="submit" value="Добавить" />
-        </p>
-    </fieldset>
+    </dl>
+
+    <p>
+        <input type="submit" value="Добавить" />
+    </p>
 }
 
 <div>

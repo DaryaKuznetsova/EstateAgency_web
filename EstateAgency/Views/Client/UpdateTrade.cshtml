@@ -1,15 +1,15 @@
-﻿@using EstateAgency.ViewModel;
+﻿@using EstateAgency.ViewModels;
 
-@model EstateObjectViewModel
+@model TradeRequestViewModel
 
 @{
-    ViewBag.Title = "DeleteEstateObject";
-    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+    ViewBag.Title = "UpdateTrade";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
-<h2>Удаление объекта недвижимости</h2>
+<h2>Заключение сделки</h2>
 
-<h3>Вы уверены, что хотите удалить следующий объект недвижимости?</h3>
+<h3>Информация</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -108,14 +108,52 @@
         }
 
     </dl>
+    <hr />
+    <h3>Связаться с Менеджером</h3>
+    <dl>
+        <dd>
+            @Html.DisplayFor(model => model.ManagerName)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.ManagerEmail)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.ManagerId)
+        </dd>
+    </dl>
+
+    <hr />
+
+    <h3>Способ оплаты: </h3>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PaymentInstrumentId, "Платёжное средство", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.PaymentInstrumentId, Model.PaymentInstruments as List<SelectListItem>, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PaymentInstrumentId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PaymentTypeId, "Оплата", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.PaymentTypeId, Model.PaymentTypes as List<SelectListItem>, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PaymentTypeId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.EstateObjectId)
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
+
         <div class="form-actions no-color">
             <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад", "Index")
+            @Html.ActionLink("Назад", "AcceptedRequests")
         </div>
     }
 </div>
+
+

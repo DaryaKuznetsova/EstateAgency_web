@@ -127,6 +127,7 @@
   <ItemGroup>
     <Compile Include="AccountRepository.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\EstateObjectController.cs" />
     <Compile Include="EstateObjectService.cs" />
     <Compile Include="EstateObjectsRepository.cs" />
@@ -153,10 +154,13 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Trade.cs" />
     <Compile Include="Models\TradeType.cs" />
+    <Compile Include="TradeService.cs" />
     <Compile Include="ViewModels\EstateObjectViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
     <Compile Include="ViewModels\LoginModel.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\RegisterModel.cs" />
+    <Compile Include="ViewModels\TradeRequestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -207,6 +211,21 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\LoginManager.cshtml" />
     <Content Include="Views\Account\RegisterManager.cshtml" />
+    <Content Include="Views\Shared\_LayoutManager.cshtml" />
+    <Content Include="Views\Shared\_LayoutStart.cshtml" />
+    <Content Include="Views\Shared\_LayoutClient.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
+    <Content Include="Views\Client\Filter.cshtml" />
+    <Content Include="Views\Client\ClientError.cshtml" />
+    <Content Include="Views\Client\Buy.cshtml" />
+    <Content Include="Views\Client\ClientMessage.cshtml" />
+    <Content Include="Views\Client\Requests.cshtml" />
+    <Content Include="Views\Client\DeleteRequest.cshtml" />
+    <Content Include="Views\Client\DeleteTrade.cshtml" />
+    <Content Include="Views\Client\UpdateTrade.cshtml" />
+    <Content Include="Views\Client\AcceptedRequests.cshtml" />
+    <Content Include="Views\Client\Trades.cshtml" />
+    <Content Include="Views\Client\ViewTrade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
