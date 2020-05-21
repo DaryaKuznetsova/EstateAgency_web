@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EstateAgency.EstateObject>
+﻿@model IEnumerable<EstateAgency.ViewModels.TradeRequestViewModel>
 
 
 @{
@@ -15,6 +15,9 @@
             Id
         </th>
         <th>
+            Date
+        </th>
+        <th>
             Price
         </th>
         <th>
@@ -25,25 +28,28 @@
         </th>
     </tr>
 
-    @foreach (EstateAgency.EstateObject e in Model)
+    @foreach (EstateAgency.ViewModels.TradeRequestViewModel e in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(m => e.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(m => e.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(m => e.Area)
-            </td>
-            <td>
-                @Html.DisplayFor(m => e.Address)
-            </td>
-            <td>
-                @Html.ActionLink("Подробнее", "TradeInfo", new { id = e.Id })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(m => e.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(m => e.EstateObjectId)
+        </td>
+        <td>
+            @Html.DisplayFor(m => e.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(m => e.Area)
+        </td>
+        <td>
+            @Html.DisplayFor(m => e.Address)
+        </td>
+        <td>
+            @Html.ActionLink("Подробнее", "TradeInfo", new { id = e.EstateObjectId })
+        </td>
+    </tr>
     }
 
 </table>

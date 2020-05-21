@@ -120,7 +120,7 @@ namespace EstateAgency
                         EstateObjectId = request.EstateObjectId,
                         ClientId = request.ClientId,
                         ManagerId = managerId,
-                        Date = DateTime.Today
+                        Date = DateTime.Now
                     };
                     db.Trades.Add(trade);
                     request.TradeId = trade.Id;
@@ -234,18 +234,21 @@ namespace EstateAgency
             }
         }
 
-        public async Task<List<EstateObject>> AllTrades()
+        public async Task<List<TradeRequestViewModel>> AllTrades()
         {
             using (Agency db = new Agency())
             {
                 var trades = from Trade in db.Trades
                              select Trade;
-                var myTrades = new List<EstateObject>();
-                foreach(Trade trade in trades)
+                var myTrades = new List<TradeRequestViewModel>();
+                foreach (Trade trade in trades)
                 {
                     EstateObject eo = await db.EstateObjects.FirstOrDefaultAsync(f => f.Id == trade.EstateObjectId);
-                    myTrades.Add(eo);
+                    TradeRequestViewModel model = await Model(eo);
+                    myTrades.Add(model);
                 }
+
+
                 return myTrades;
             }
         }

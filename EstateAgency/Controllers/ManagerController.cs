@@ -70,7 +70,7 @@ namespace EstateAgency.Controllers
 
         public async Task<ActionResult> Trades()
         {
-            List<EstateObject> trades = await tradeService.AllTrades();
+            List<TradeRequestViewModel> trades = await tradeService.AllTrades();
             return View(trades);
         }
 
