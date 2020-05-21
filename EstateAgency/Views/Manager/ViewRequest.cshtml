@@ -1,15 +1,14 @@
-﻿@using EstateAgency.ViewModels;
+﻿@using EstateAgency.ViewModel;
 
-@model TradeRequestViewModel
+@model EstateObjectViewModel
 
 @{
-    ViewBag.Title = "ViewTrade";
-    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    ViewBag.Title = "DeleteEstateObject";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>Сделка</h2>
+<h2>Рассмотрение заявки</h2>
 
-<h3>Информация</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -88,7 +87,7 @@
             </dd>
         }
 
-        @if (Model.RealtyTypeId == 3)
+        @if (ViewBag.RealtyTypeId == 3)
         {
             <dt>
                 @Html.DisplayNameFor(model => model.LandDescription)
@@ -108,38 +107,18 @@
         }
 
     </dl>
-    <hr />
-    <h3>Связаться с Менеджером</h3>
-    <dl>
-        <dd>
-            @Html.DisplayFor(model => model.ManagerName)
-        </dd>
-        <dd>
-            @Html.DisplayFor(model => model.ManagerEmail)
-        </dd>
-        <dd>
-            @Html.DisplayFor(model => model.ManagerId)
-        </dd>
-    </dl>
 
-    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    <h3>Способ оплаты: </h3>
-
-    <dl>
-        <dd>
-            @Html.DisplayFor(model => model.PaymentType)
-        </dd>
-        <dd>
-            @Html.DisplayFor(model => model.PaymentInstrument)
-        </dd>
-    </dl>
-
-    @Html.HiddenFor(model => model.EstateObjectId)
-
-    @Html.ActionLink("Назад", "Trades")
+        <div class="form-actions no-color">
+            <input type="submit" value="Принять" class="btn btn-default" /> |
+            @Html.ActionLink("Отклонить", "RejectRequest", new { eoId=Model.Id})
+        </div>
+    }
 </div>
-
-
+<hr />
+@Html.ActionLink("Назад", "Index")
 
 

@@ -75,7 +75,7 @@ namespace EstateAgency.Controllers
             Agency db = new Agency();
             int clientId = Convert.ToInt32(User.Identity.Name);
             int estateObjectId = model.Id;
-            MessageViewModel error= await _tradeService.CreateRequest(clientId, estateObjectId);
+            MessageViewModel error = await _tradeService.CreateRequest(clientId, estateObjectId);
                 return RedirectToAction("ClientMessage", new { type=error.Type, message=error.Message });
         }
 

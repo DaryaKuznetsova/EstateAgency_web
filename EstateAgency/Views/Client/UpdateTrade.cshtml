@@ -7,9 +7,15 @@
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
+
 <h2>Заключение сделки</h2>
 
 <h3>Информация</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -118,7 +124,7 @@
             @Html.DisplayFor(model => model.ManagerEmail)
         </dd>
         <dd>
-            @Html.DisplayFor(model => model.ManagerId)
+            @Html.DisplayFor(model => model.ManagerPhone)
         </dd>
     </dl>
 
@@ -144,16 +150,15 @@
 
     @Html.HiddenFor(model => model.EstateObjectId)
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+    <hr />
 
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад", "AcceptedRequests")
-        </div>
-    }
+    <div class="form-actions no-color">
+        <input type="submit" value="Заключить договор" class="btn btn-default" /> |
+        @Html.ActionLink("Отменить", "DeleteTrade", new { id = Model.EstateObjectId })
+    </div>
 </div>
+}
+
+@Html.ActionLink("Назад", "AcceptedRequests")
 
 

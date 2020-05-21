@@ -3,11 +3,10 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>Мои Заявки</h2>
-
+<h2>Активные заявки</h2>
 
 <table class="table">
     <tr>
@@ -41,14 +40,13 @@
                 @Html.DisplayFor(m => e.Address)
             </td>
             <td>
-                @Html.ActionLink("Отменить", "DeleteRequest", new { id = e.Id })
+                @Html.ActionLink("Рассмотреть заявку", "ViewRequest", new { id = e.Id })
             </td>
         </tr>
     }
 
 </table>
 @Html.ActionLink("Назад", "Index")
-
 
 
 

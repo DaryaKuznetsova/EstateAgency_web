@@ -3,16 +3,23 @@
 @model TradeRequestViewModel
 
 @{
-    ViewBag.Title = "ViewTrade";
-    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    ViewBag.Title = "DeleteEstateObject";
 }
 
-<h2>Сделка</h2>
+<h2>Удаление сделки</h2>
 
-<h3>Информация</h3>
+<h3>Вы уверены, что хотите удалить сделку?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.District)
         </dt>
@@ -135,9 +142,17 @@
         </dd>
     </dl>
 
-    @Html.HiddenFor(model => model.EstateObjectId)
 
-    @Html.ActionLink("Назад", "Trades")
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.EstateObjectId)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Trades")
+        </div>
+    }
 </div>
 
 

@@ -3,16 +3,30 @@
 @model TradeRequestViewModel
 
 @{
-    ViewBag.Title = "ViewTrade";
-    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    ViewBag.Title = "UpdateTrade";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
+
 
 <h2>Сделка</h2>
 
 <h3>Информация</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
 <div>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.District)
         </dt>
@@ -88,7 +102,7 @@
             </dd>
         }
 
-        @if (Model.RealtyTypeId == 3)
+        @if (ViewBag.RealtyTypeId == 3)
         {
             <dt>
                 @Html.DisplayNameFor(model => model.LandDescription)
@@ -107,18 +121,19 @@
             </dd>
         }
 
+
     </dl>
     <hr />
-    <h3>Связаться с Менеджером</h3>
+    <h3>Связаться с Клиентом</h3>
     <dl>
         <dd>
-            @Html.DisplayFor(model => model.ManagerName)
+            @Html.DisplayFor(model => model.ClientName)
         </dd>
         <dd>
-            @Html.DisplayFor(model => model.ManagerEmail)
+            @Html.DisplayFor(model => model.ClientEmail)
         </dd>
         <dd>
-            @Html.DisplayFor(model => model.ManagerId)
+            @Html.DisplayFor(model => model.ClientPhone)
         </dd>
     </dl>
 
@@ -137,8 +152,15 @@
 
     @Html.HiddenFor(model => model.EstateObjectId)
 
-    @Html.ActionLink("Назад", "Trades")
+    <hr />
+
+    <div class="form-actions no-color">
+        @Html.ActionLink("Удалить сделку", "DeleteTrade", new { id = Model.EstateObjectId })
+    </div>
 </div>
+}
+
+@Html.ActionLink("Назад", "Trades")
 
 
 

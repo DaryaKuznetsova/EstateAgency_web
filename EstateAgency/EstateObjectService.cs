@@ -19,9 +19,9 @@ namespace EstateAgency
             _estateObjectsRepository = new EstateObjectsRepository();
         }
 
-        public async Task<List<EstateObject>> GetEstateObjects()
+        public async Task<List<EstateObject>> GetEstateObjects(int status=1)
         {
-            return await _estateObjectsRepository.GetEstateObjects();
+            return await _estateObjectsRepository.GetEstateObjects(status);
         }
 
         public async Task<EstateObject> GetEstateObject(int id)

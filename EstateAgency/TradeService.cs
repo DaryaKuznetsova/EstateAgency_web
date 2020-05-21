@@ -54,7 +54,7 @@ namespace EstateAgency
             {
                 var result = from EstateObject in db.EstateObjects
                              join Trade in db.Trades on EstateObject.Id equals Trade.EstateObjectId
-                             where Trade.ClientId == clientId
+                             where Trade.ClientId == clientId && EstateObject.StatusId==4
                              select EstateObject;
                 return await result.ToListAsync();
             }
@@ -105,13 +105,13 @@ namespace EstateAgency
             }
         }
 
-        public async Task<MessageViewModel> CreateTrade(int requestId, int managerId)
+        public async Task<MessageViewModel> CreateTrade(int estateObjectId, int managerId)
         {
             using (Agency db = new Agency())
             {
                 MessageViewModel model = new MessageViewModel();
-                Request request = await db.Requests.FirstOrDefaultAsync(f => f.Id == requestId);
-                EstateObject eo = await db.EstateObjects.FirstOrDefaultAsync(f => f.Id == request.EstateObjectId);
+                Request request = await db.Requests.FirstOrDefaultAsync(f => f.EstateObjectId == estateObjectId);
+                EstateObject eo = await db.EstateObjects.FirstOrDefaultAsync(f => f.Id == estateObjectId);
                 if(eo.StatusId==2)
                 {
                     eo.StatusId = 3;
@@ -125,12 +125,11 @@ namespace EstateAgency
                     db.Trades.Add(trade);
                     request.TradeId = trade.Id;
                     await db.SaveChangesAsync();
-                    model.Type = "Заявка принята";
                 }
                 else
                 {
                     model.Type = "Ошибка";
-                    model.Message = "Заявка не была принята. Возможно, её рассмотрел другой менеджер.";
+                    model.Message = "Очевидно, другой менеджер только что рассмотрел эту заявку, или её отменили.";
                 }
                 return model;
             }
@@ -168,13 +167,14 @@ namespace EstateAgency
         {
             using (Agency db = new Agency())
             {
-                Request request = await db.Requests.FirstOrDefaultAsync(f => f.EstateObjectId == eo.Id);
-                TradeRequestViewModel model = new TradeRequestViewModel
+                Trade trade = await db.Trades.FirstOrDefaultAsync(f => f.EstateObjectId == eo.Id);
+                TradeRequestViewModel model = new TradeRequestViewModel();
+                model = new TradeRequestViewModel
                 {
                     EstateObjectId = eo.Id,
-                    ClientId = request.ClientId,
-                    ManagerId = request.Trade.ManagerId,
-                    TradeId = Convert.ToInt32(request.TradeId),
+                    ClientId = trade.ClientId,
+                    ManagerId = trade.ManagerId,
+                    TradeId = Convert.ToInt32(trade.Id),
 
                     Price = eo.Price,
                     Address = eo.Address,
@@ -188,25 +188,65 @@ namespace EstateAgency
                     TradeType = eo.TradeType.Name,
                     Owner = eo.Owner.Surname + " " + eo.Owner.Name + " " + eo.Owner.Patronymic + ": " + eo.Owner.Phone,
 
-                    ClientEmail = request.Client.Email,
-                    ClientName = request.Client.Surname + " " + request.Client.Name + " " + request.Client.Patronymic,
-                    ClientPhone = request.Client.Phone,
+                    ClientEmail = trade.Client.Email,
+                    ClientName = trade.Client.Surname + " " + trade.Client.Name + " " + trade.Client.Patronymic,
+                    ClientPhone = trade.Client.Phone,
 
-                    ManagerEmail = request.Trade.Manager.Email,
-                    ManagerName = request.Trade.Manager.Surname + " " + request.Trade.Manager.Name + " " + request.Trade.Manager.Patronymic,
-                    ManagerPhone = request.Trade.Manager.Phone,
+                    ManagerEmail = trade.Manager.Email,
+                    ManagerName = trade.Manager.Surname + " " + trade.Manager.Name + " " + trade.Manager.Patronymic,
+                    ManagerPhone = trade.Manager.Phone,
 
-                    Date = request.Trade.Date,
-                    PaymentInstrumentId = 0,
+                    Date = trade.Date,
                     PaymentInstruments = PreparePaymentInstruments(),
-                    PaymentTypeId = 0,
                     PaymentTypes = PreparePaymentTypes(),
-                    PaymentInstrument=request.Trade.PaymentInstrument.Name,
-                    PaymentType = request.Trade.PaymentType.Name,
 
                     RealtyTypeId =eo.RealtyTypeId
                 };
+                if(trade.PaymentInstrument!=null)
+                {
+                    model.PaymentInstrument = trade.PaymentInstrument.Name;
+                    model.PaymentType = trade.PaymentType.Name;
+                }
                 return model;
+            }
+        }
+
+
+        public async Task<MessageViewModel> RejectRequest(int id)
+        {
+            using (Agency db = new Agency())
+            {
+                MessageViewModel message = new MessageViewModel();
+                EstateObject eo = await db.EstateObjects.FirstOrDefaultAsync(f => f.Id == id);
+                if (eo.StatusId == 2)
+                {
+                    eo.StatusId = 1;
+                    Request req = await db.Requests.FirstOrDefaultAsync(f => f.EstateObjectId == id);
+                    db.Requests.Remove(req);
+                    await db.SaveChangesAsync();
+                }
+                else
+                {
+                    message.Type = "Ошибка";
+                    message.Message = "Очевидно, другой менеджер только что рассмотрел эту заявку, или её отменили.";
+                }
+                return message;
+            }
+        }
+
+        public async Task<List<EstateObject>> AllTrades()
+        {
+            using (Agency db = new Agency())
+            {
+                var trades = from Trade in db.Trades
+                             select Trade;
+                var myTrades = new List<EstateObject>();
+                foreach(Trade trade in trades)
+                {
+                    EstateObject eo = await db.EstateObjects.FirstOrDefaultAsync(f => f.Id == trade.EstateObjectId);
+                    myTrades.Add(eo);
+                }
+                return myTrades;
             }
         }
     }

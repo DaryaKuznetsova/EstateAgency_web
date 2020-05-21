@@ -107,16 +107,35 @@
 
     </dl>
 
+    <h4>Фото: </h4>
+
+    <table>
+        <tr>
+            @foreach (var item in Model.Pictures)
+            {
+
+                <td>  </td>
+                <td>
+                    @Html.Raw("<img style='width:100px; height:100px;' src=\"data:image/jpeg;base64,"
+                         + Convert.ToBase64String(item.Path) + "\" />")
+                </td>
+                <td>  </td>
+            }
+        </tr>
+    </table>
+
+    <hr />
+
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Купить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад", "Index")
         </div>
     }
 </div>
+@Html.ActionLink("Назад", "Index")
 
 
 

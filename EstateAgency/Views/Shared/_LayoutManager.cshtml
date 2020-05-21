@@ -20,8 +20,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Каталог", "Index", "EstateObject")</li>
-                    <li>@Html.ActionLink("Сделки", "StartAddEstateObject", "EstateObject")</li>
-                    <li>@Html.ActionLink("Отчеты", "Login", "Account")</li>
+                    <li>@Html.ActionLink("Заявки", "Requests", "Manager")</li>
+                    <li>@Html.ActionLink("Сделки", "Trades", "Manager")</li>
+                    <li>@Html.ActionLink("Отчеты", "Reports", "Manager")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
