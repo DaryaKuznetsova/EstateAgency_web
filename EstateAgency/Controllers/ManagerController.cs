@@ -71,7 +71,16 @@ namespace EstateAgency.Controllers
         public async Task<ActionResult> Trades()
         {
             List<TradeRequestViewModel> trades = await tradeService.AllTrades();
-            return View(trades);
+            TradesViewModel model = new TradesViewModel(trades);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Trades(TradesViewModel model)
+        {
+            List<TradeRequestViewModel> trades = await tradeService.GetTrades(model.FirstDate, model.SecondDate);
+            model = new TradesViewModel(trades);
+            return View(model);
         }
 
         public async Task<ActionResult> TradeInfo(int id)

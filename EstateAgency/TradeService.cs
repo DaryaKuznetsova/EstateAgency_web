@@ -247,8 +247,24 @@ namespace EstateAgency
                     TradeRequestViewModel model = await Model(eo);
                     myTrades.Add(model);
                 }
+                return myTrades;
+            }
+        }
 
-
+        public async Task<List<TradeRequestViewModel>> GetTrades(DateTime firstDate, DateTime secondDate)
+        {
+            using (Agency db = new Agency())
+            {
+                var trades = from Trade in db.Trades
+                             where Trade.Date>=firstDate&&Trade.Date<=secondDate
+                             select Trade;
+                var myTrades = new List<TradeRequestViewModel>();
+                foreach (Trade trade in trades)
+                {
+                    EstateObject eo = await db.EstateObjects.FirstOrDefaultAsync(f => f.Id == trade.EstateObjectId);
+                    TradeRequestViewModel model = await Model(eo);
+                    myTrades.Add(model);
+                }
                 return myTrades;
             }
         }

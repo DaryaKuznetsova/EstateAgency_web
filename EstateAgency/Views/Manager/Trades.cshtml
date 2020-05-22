@@ -1,60 +1,108 @@
-﻿@model IEnumerable<EstateAgency.ViewModels.TradeRequestViewModel>
-
+﻿@*@model IEnumerable<EstateAgency.ViewModels.TradeRequestViewModel>*@
+@model EstateAgency.ViewModels.TradesViewModel
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>Каталог объектов недвижимости</h2>
+<h2>Сделки</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
 
-<table class="table">
-    <tr>
-        <th>
-            Id
-        </th>
-        <th>
-            Date
-        </th>
-        <th>
-            Price
-        </th>
-        <th>
-            Area
-        </th>
-        <th>
-            Address
-        </th>
-    </tr>
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.Label("От", htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstDate, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.FirstDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-    @foreach (EstateAgency.ViewModels.TradeRequestViewModel e in Model)
-    {
-    <tr>
-        <td>
-            @Html.DisplayFor(m => e.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(m => e.EstateObjectId)
-        </td>
-        <td>
-            @Html.DisplayFor(m => e.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(m => e.Area)
-        </td>
-        <td>
-            @Html.DisplayFor(m => e.Address)
-        </td>
-        <td>
-            @Html.ActionLink("Подробнее", "TradeInfo", new { id = e.EstateObjectId })
-        </td>
-    </tr>
-    }
+        <div class="form-group">
+            @Html.Label("До", htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SecondDate, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.SecondDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-</table>
-@Html.ActionLink("Назад", "Index")
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Найти" class="btn btn-default" />
+            </div>
+        </div>
+        </div>
+        }
 
+        <table class="table">
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Area
+                </th>
+                <th>
+                    Address
+                </th>
+            </tr>
+
+            @foreach (EstateAgency.ViewModels.TradeRequestViewModel e in Model.List)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => e.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => e.EstateObjectId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => e.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => e.Area)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => e.Address)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Подробнее", "TradeInfo", new { id = e.EstateObjectId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        @Html.ActionLink("Назад", "Index")
+
+        @section Scripts {
+
+            @Scripts.Render("~/bundles/jqueryui")
+            @Styles.Render("~/Content/cssjqryUi")
+
+            <script type="text/javascript">
+
+                $(document).ready(function () {
+                    $('input[type=datetime]').datepicker({
+                        dateFormat: "dd/M/yy",
+                        changeMonth: true,
+                        changeYear: true,
+                        yearRange: "-60:+0"
+                    });
+
+                });
+            </script>
+
+        }
 
 
 
