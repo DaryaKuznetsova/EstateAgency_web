@@ -155,12 +155,14 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Trade.cs" />
     <Compile Include="Models\TradeType.cs" />
+    <Compile Include="ReportService.cs" />
     <Compile Include="TradeService.cs" />
     <Compile Include="ViewModels\EstateObjectViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
     <Compile Include="ViewModels\LoginModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\RegisterModel.cs" />
+    <Compile Include="ViewModels\ReportViewModel.cs" />
     <Compile Include="ViewModels\TradeRequestViewModel.cs" />
     <Compile Include="ViewModels\TradesViewModel.cs" />
   </ItemGroup>

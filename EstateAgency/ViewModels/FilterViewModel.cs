@@ -33,6 +33,7 @@ namespace EstateAgency.ViewModel
         [Display(Name = "Районы: ")]
         public List<int> SelectedDistricts { get; set; }
         public IEnumerable<SelectListItem> Districts { get; set; }
+
     }
 
 }

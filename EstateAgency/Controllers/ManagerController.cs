@@ -108,5 +108,16 @@ namespace EstateAgency.Controllers
             return RedirectToAction("Trades");
         }
 
+        public async Task<ActionResult> Reports()
+        {
+            ReportViewModel model = new ReportViewModel();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Reports(ReportViewModel model)
+        {
+            return null;
+        }
     }
 }
