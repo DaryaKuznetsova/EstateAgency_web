@@ -14,11 +14,13 @@ namespace EstateAgency.Controllers
     {
         private readonly TradeService tradeService;
         private readonly EstateObjectService eoService;
+        private readonly ReportService reportService;
 
         public ManagerController()
         {
             tradeService = new TradeService();
             eoService = new EstateObjectService();
+            reportService = new ReportService();
         }
 
         // GET: Manager
@@ -108,16 +110,32 @@ namespace EstateAgency.Controllers
             return RedirectToAction("Trades");
         }
 
-        public async Task<ActionResult> Reports()
+        public ActionResult Reports()
         {
             ReportViewModel model = new ReportViewModel();
-            return View();
+            model.Managers = reportService.ManagersList();
+            model.FirstDate = DateTime.Today;
+            model.SecondDate = DateTime.Today;
+            return View(model);
         }
 
         [HttpPost]
         public async Task<ActionResult> Reports(ReportViewModel model)
         {
-            return null;
+            string savePath = Server.MapPath("~/savedoc/PersonInfo.doc");
+            string templatePath = Server.MapPath("~/word/wordTemplate.doc");
+            Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+            Microsoft.Office.Interop.Word.Document doc = new Microsoft.Office.Interop.Word.Document();
+            doc = app.Documents.Open(templatePath);
+            doc.Activate();
+            if (doc.Bookmarks.Exists("type"))
+            {
+                doc.Bookmarks["Name"].Range.Text = model.FirstDate.ToString();
+            }
+
+            doc.SaveAs2(savePath);
+            app.Application.Quit();
+            return RedirectToAction("index");
         }
     }
 }
