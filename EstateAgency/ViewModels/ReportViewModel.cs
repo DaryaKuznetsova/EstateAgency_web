@@ -21,5 +21,15 @@ namespace EstateAgency.ViewModels
 
         }
 
+        public string FilePath { get; set; }
+        public string FileName { get; set; }
+        public int Flats { get; set; }
+        public int Rooms { get; set; }
+        public int Houses { get; set; }
+
+        public int ManagerCount { get; set; }
+        public int TotalCount { get; set; }
+        public string ManagerName { get; set; }
+
     }
 }

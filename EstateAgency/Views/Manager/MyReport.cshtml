@@ -1,0 +1,82 @@
+﻿@*@model IEnumerable<EstateAgency.ViewModels.TradeRequestViewModel>*@
+@model EstateAgency.ViewModels.ReportViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+
+<h3>Отчет о заключенных сделках</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Менеджер
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManagerName)
+        </dd>
+
+        <dt>
+            Количество проданных квартир
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Flats)
+        </dd>
+        <dt>
+            Количество проданных комнат
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rooms)
+        </dd>
+        <dt>
+            Количество проданных домов
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Houses)
+        </dd>
+        <dt>
+            Всего:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManagerCount)
+        </dd>
+        <dt>
+            Общее количество сделок в агентстве
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalCount)
+        </dd>
+    </dl>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.FilePath)
+    @Html.HiddenFor(model => model.FileName)
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Скачать отчет" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@Html.ActionLink("Назад", "Index")
+
+
+
+
+
+
+
+
+
+

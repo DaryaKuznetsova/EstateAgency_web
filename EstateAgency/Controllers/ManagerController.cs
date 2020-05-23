@@ -1,8 +1,10 @@
 ﻿using EstateAgency.ViewModel;
 using EstateAgency.ViewModels;
+using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -120,22 +122,43 @@ namespace EstateAgency.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Reports(ReportViewModel model)
+        public ActionResult Reports(ReportViewModel model)
         {
-            string savePath = Server.MapPath("~/savedoc/PersonInfo.doc");
-            string templatePath = Server.MapPath("~/word/wordTemplate.doc");
-            Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
-            Microsoft.Office.Interop.Word.Document doc = new Microsoft.Office.Interop.Word.Document();
-            doc = app.Documents.Open(templatePath);
-            doc.Activate();
-            if (doc.Bookmarks.Exists("type"))
-            {
-                doc.Bookmarks["Name"].Range.Text = model.FirstDate.ToString();
-            }
+            string templatePath = Server.MapPath("~/Files/MyTemplate2.docx");
+            DateTime date = DateTime.Now;
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
+            string d = date.ToString("o", culture);
+            d = d.Replace(':', '_').Replace('+', '_');
+            string fileName = "Report"+d+".docx";
 
-            doc.SaveAs2(savePath);
-            app.Application.Quit();
-            return RedirectToAction("index");
+            bool ok = reportService.SaveReport(ref model, templatePath, fileName);
+            if (ok)
+                return RedirectToAction("MyReport", new { name=model.ManagerName, flats=model.Flats,
+                    rooms=model.Rooms, houses=model.Houses, managerCount=model.ManagerCount, totalCount=model.TotalCount, file_name = fileName });
+            else return RedirectToAction("Reports");
+        }
+
+        public ActionResult MyReport(string name, int flats, int rooms, int houses,
+            int managerCount, int totalCount, string file_name)
+        {
+            ReportViewModel model = new ReportViewModel();
+            string file_path= @"D:\Рабочий стол\EstateAgency\Templates\" + file_name;
+            model.FilePath = file_path;
+            model.FileName = file_name;
+            model.ManagerName = name;
+            model.Flats = flats;
+            model.Rooms = rooms;
+            model.Houses = houses;
+            model.ManagerCount = managerCount;
+            model.TotalCount = totalCount;
+            return View(model);
+        }
+
+        [HttpPost]
+        public FileResult MyReport(ReportViewModel model)
+        {
+            string file_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            return File(model.FilePath, file_type, model.FileName);
         }
     }
 }
