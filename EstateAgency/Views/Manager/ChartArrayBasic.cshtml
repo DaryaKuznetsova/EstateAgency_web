@@ -1,0 +1,25 @@
+﻿@{var filePathName = "Charts/chart01.jpg";
+    if (!File.Exists(Server.MapPath(filePathName)))
+
+    {
+        var myChart = new Chart(width: 600, height: 400)
+            .AddTitle("Количество сделок")
+            .AddSeries(
+                name: "Квартиры",
+                xValue: ViewBag.Managers,
+                yValues: ViewBag.Flats)
+                .AddSeries(
+                name: "Комнаты",
+
+                yValues: ViewBag.Rooms)
+                        .AddSeries(
+                name: "Дома",
+
+                yValues: ViewBag.Houses);
+
+        myChart.AddLegend();
+        //myChart.Write();
+        myChart.Save(path: filePathName);
+    }
+}
+

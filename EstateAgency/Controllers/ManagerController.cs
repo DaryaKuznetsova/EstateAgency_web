@@ -160,5 +160,33 @@ namespace EstateAgency.Controllers
             string file_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
             return File(model.FilePath, file_type, model.FileName);
         }
+
+        public ActionResult Statistics()
+        {
+            ReportViewModel model = new ReportViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Statistics(ReportViewModel model)
+        {
+            //
+            return View(model);
+        }
+
+        public ActionResult ChartArrayBasic(ReportViewModel model)
+        {
+            List<string> Managers = reportService.Managers();
+            List<int> flats = reportService.RealtyTypeCounts(1, model.FirstDate, model.SecondDate);
+            List<int> rooms = reportService.RealtyTypeCounts(2, model.FirstDate, model.SecondDate);
+            List<int> houses = reportService.RealtyTypeCounts(3, model.FirstDate, model.SecondDate);
+
+            ViewBag.Managers = Managers;
+            ViewBag.Flats = flats;
+            ViewBag.Rooms = rooms;
+            ViewBag.Houses = houses;
+
+            return View();
+        }
     }
 }

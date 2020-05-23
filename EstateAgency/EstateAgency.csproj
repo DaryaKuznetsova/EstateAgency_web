@@ -283,9 +283,12 @@
     <Content Include="Views\Manager\DeleteTrade.cshtml" />
     <Content Include="Views\Manager\Reports.cshtml" />
     <Content Include="Views\Manager\MyReport.cshtml" />
+    <Content Include="Views\Manager\Statistics.cshtml" />
+    <Content Include="Views\Manager\ChartArrayBasic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Charts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

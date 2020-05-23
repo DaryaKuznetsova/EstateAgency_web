@@ -14,20 +14,39 @@ namespace EstateAgency
     {
         private List<int> managersId;
 
-        public async Task<List<string>> Managers()
+        public List<string> Managers()
         {
             List<string> managers = new List<string>();
-            managersId = new List<int>();
 
             using (Agency db = new Agency())
             {
                 var result = from Manager in db.Managers
-                             select Manager.Surname + "_" + Manager.Name[0] + "._" + Manager.Patronymic[0]+".";
-                var id = from Manager in db.Managers select Manager.Id;
-                managers = await result.ToListAsync();
-                managersId = await id.ToListAsync();
+                             select Manager.Surname ;
+                foreach (var s in result)
+                    managers.Add(s.ToString());
                 return managers;
             }
+        }
+
+        public List<int> RealtyTypeCounts(int realtyType, DateTime firstDate, DateTime secondDate)
+        {
+            List<int> counts = new List<int>();
+            using (Agency db = new Agency())
+            {
+                var managers = from Manager in db.Managers
+                             select Manager.Id;
+                foreach (var id in managers)
+                {
+                    var number = from trade in db.Trades
+                                 join estateObject in db.EstateObjects on trade.EstateObjectId equals estateObject.Id
+                                 where trade.ManagerId==id && estateObject.RealtyTypeId==realtyType
+                                 && trade.Date >=firstDate&& trade.Date<=secondDate
+                                 select trade;
+                    int count = number.Count();
+                    counts.Add(count);
+                }
+            }
+            return counts;
         }
 
         public string Manager(int id)
@@ -43,13 +62,13 @@ namespace EstateAgency
             }
         }
 
-        public int CountManagerType(int managerId, int realtyTypeId)
+        public int CountManagerType(int managerId, int realtyTypeId, DateTime firstDate, DateTime secondDate)
         {
             using (Agency db = new Agency())
             {
                 var result = from Trade in db.Trades
                              join EstateObject in db.EstateObjects on Trade.EstateObjectId equals EstateObject.Id
-                             where Trade.ManagerId == managerId && EstateObject.RealtyTypeId == realtyTypeId
+                             where Trade.ManagerId == managerId && EstateObject.RealtyTypeId == realtyTypeId && Trade.Date>=firstDate && Trade.Date<=secondDate
                              select Trade;
                 return result.Count();
             }
@@ -94,9 +113,9 @@ namespace EstateAgency
 
         public bool SaveReport(ref ReportViewModel model, string templatePath, string saveName)
         {
-            model.Flats =  CountManagerType(model.ManagerId, 1);
-            model.Rooms =  CountManagerType(model.ManagerId, 2);
-            model.Houses =  CountManagerType(model.ManagerId, 3);
+            model.Flats =  CountManagerType(model.ManagerId, 1, model.FirstDate, model.SecondDate);
+            model.Rooms =  CountManagerType(model.ManagerId, 2, model.FirstDate, model.SecondDate);
+            model.Houses =  CountManagerType(model.ManagerId, 3, model.FirstDate, model.SecondDate);
             model.ManagerCount = model.Flats + model.Rooms + model.Houses;
             model.TotalCount =  TotalCount(model.FirstDate, model.SecondDate);
             model.ManagerName =  Manager(model.ManagerId);
