@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -164,6 +165,11 @@ namespace EstateAgency.Controllers
         public ActionResult Statistics()
         {
             ReportViewModel model = new ReportViewModel();
+            //string path = @"‪D:\Рабочий стол\обложка.jpg";
+            //FileStream fstream = File.OpenRead($"{path}\note.txt")
+            //string _FileName = Path.GetFileName(file.FileName);
+            //string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
+            //file.SaveAs(_path)
             return View(model);
         }
 
@@ -187,6 +193,18 @@ namespace EstateAgency.Controllers
             ViewBag.Houses = houses;
 
             return View();
+        }
+
+        public ActionResult GetImg()
+        {
+            string path = @"D:\Рабочий стол\обложка.jpg";
+            if (!string.IsNullOrEmpty(path))
+            {
+                FileInfo file = new FileInfo(path);
+                if (file.Exists)
+                    return File(file.FullName, "text/plain", file.Name);
+            }
+            return Content("");
         }
     }
 }

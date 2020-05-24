@@ -1,4 +1,4 @@
-﻿@{var filePathName = "Charts/chart01.jpg";
+﻿@{var filePathName = "Charts/chart03.jpg";
     if (!File.Exists(Server.MapPath(filePathName)))
 
     {
@@ -18,7 +18,7 @@
                 yValues: ViewBag.Houses);
 
         myChart.AddLegend();
-        //myChart.Write();
+        myChart.Write();
         myChart.Save(path: filePathName);
     }
 }
