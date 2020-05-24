@@ -165,27 +165,21 @@ namespace EstateAgency.Controllers
         public ActionResult Statistics()
         {
             ReportViewModel model = new ReportViewModel();
-            //string path = @"‪D:\Рабочий стол\обложка.jpg";
-            //FileStream fstream = File.OpenRead($"{path}\note.txt")
-            //string _FileName = Path.GetFileName(file.FileName);
-            //string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
-            //file.SaveAs(_path)
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Statistics(ReportViewModel model)
         {
-            //
             return View(model);
         }
 
-        public ActionResult ChartArrayBasic(ReportViewModel model)
+        public ActionResult ChartArrayBasic(DateTime first, DateTime second)
         {
             List<string> Managers = reportService.Managers();
-            List<int> flats = reportService.RealtyTypeCounts(1, model.FirstDate, model.SecondDate);
-            List<int> rooms = reportService.RealtyTypeCounts(2, model.FirstDate, model.SecondDate);
-            List<int> houses = reportService.RealtyTypeCounts(3, model.FirstDate, model.SecondDate);
+            List<int> flats = reportService.RealtyTypeCounts(1, first, second);
+            List<int> rooms = reportService.RealtyTypeCounts(2, first, second);
+            List<int> houses = reportService.RealtyTypeCounts(3, first, second);
 
             ViewBag.Managers = Managers;
             ViewBag.Flats = flats;
@@ -193,18 +187,6 @@ namespace EstateAgency.Controllers
             ViewBag.Houses = houses;
 
             return View();
-        }
-
-        public ActionResult GetImg()
-        {
-            string path = @"D:\Рабочий стол\обложка.jpg";
-            if (!string.IsNullOrEmpty(path))
-            {
-                FileInfo file = new FileInfo(path);
-                if (file.Exists)
-                    return File(file.FullName, "text/plain", file.Name);
-            }
-            return Content("");
         }
     }
 }

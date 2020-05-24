@@ -1,6 +1,4 @@
-﻿@{var filePathName = "Charts/chart03.jpg";
-    if (!File.Exists(Server.MapPath(filePathName)))
-
+﻿@{
     {
         var myChart = new Chart(width: 600, height: 400)
             .AddTitle("Количество сделок")
@@ -19,7 +17,6 @@
 
         myChart.AddLegend();
         myChart.Write();
-        myChart.Save(path: filePathName);
     }
 }
 
