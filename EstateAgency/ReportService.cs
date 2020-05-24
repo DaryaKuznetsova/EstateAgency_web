@@ -97,19 +97,6 @@ namespace EstateAgency
             }
         }
 
-        //public async Task CreateChart()
-        //{
-        //    managersId = new List<int>();
-        //    int i = 0;
-        //    foreach (string manager in await Managers())
-        //    {
-        //        int flats = await CountManagerType(managersId[i], 1);
-        //        int rooms = await CountManagerType(managersId[i], 2);
-        //        int houses = await CountManagerType(managersId[i], 3);
-        //        i++;
-        //        AddSeries(manager, flats, rooms, houses);
-        //    }
-        //}
 
         public bool SaveReport(ref ReportViewModel model, string templatePath, string saveName)
         {

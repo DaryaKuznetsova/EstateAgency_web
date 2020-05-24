@@ -23,9 +23,12 @@ namespace EstateAgency.Controllers
         // GET: EstateObject
         public async Task<ActionResult> Index()
         {
+            Agency db = new Agency();
             var estateObjects = await _estateObjectService.GetEstateObjects();
-            return View(estateObjects);
+            List<EstateObjectViewModel> list = await _estateObjectService.GetEstateObjectViewModels(estateObjects);
+            return View(list);
         }
+        
 
         #region Create
 
@@ -54,7 +57,15 @@ namespace EstateAgency.Controllers
         public async Task<ActionResult> AddEstateObject(EstateObjectViewModel model)
         {
             if (!ModelState.IsValid)
-                return RedirectToAction("AddEstateObject", new { realtyType = model.RealtyTypeId });
+            {
+                Agency db = new Agency();
+                RealtyType result = db.RealtyTypes.FirstOrDefault(f => f.Id == model.RealtyTypeId);
+                model = _estateObjectService.Model();
+                model.RealtyTypeId = result.Id;
+                model.RealtyType = result.Name;
+                return View(model);
+            }
+
             EstateObject eo = await _estateObjectService.EstateObject(model);
             eo.StatusId = 1;
             await _estateObjectService.AddEstateObject(eo);
@@ -89,14 +100,15 @@ namespace EstateAgency.Controllers
         }
 
         [HttpPost]
-        public ActionResult Filter(FilterViewModel filterViewModel)
+        public async Task< ActionResult> Filter(FilterViewModel filterViewModel)
         {
             Agency db = new Agency();
             if (!ModelState.IsValid)
                 return RedirectToAction("Filter");
             var res=EstateObjectsRepository.SelectEstateObjects(1, filterViewModel.RealtyTypeId, filterViewModel.TradeTypeId,
                 filterViewModel.MinPrice, filterViewModel.MaxPrice, filterViewModel.MinArea, filterViewModel.MaxArea, filterViewModel.SelectedDistricts);
-            return View("Index", res);
+            List<EstateObjectViewModel> models = await _estateObjectService.GetEstateObjectViewModels(res);
+            return View("Index", models);
         }
 
         #endregion
@@ -127,7 +139,13 @@ namespace EstateAgency.Controllers
                 await _estateObjectService.UpdateEstateObject(eo);
                 return RedirectToAction("Index");
             }
-            else return RedirectToAction("UpdateEstateObject", new { id = model.Id });
+            else
+            {
+                Agency db = new Agency();
+                EstateObject eo = await db.EstateObjects.FirstOrDefaultAsync(f => f.Id == model.Id);
+                model = await _estateObjectService.Model(eo);
+                return View(model);
+            }
         }
         #endregion
 

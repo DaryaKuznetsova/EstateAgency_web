@@ -9,6 +9,7 @@ namespace EstateAgency.ViewModels
 {
     public class TradeRequestViewModel
     {
+        [HiddenInput(DisplayValue = false)]
         public int EstateObjectId { get; set; }
         public int ClientId { get; set; }
         public int ManagerId { get; set; }

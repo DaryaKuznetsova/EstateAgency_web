@@ -156,5 +156,19 @@ namespace EstateAgency
             };
             return eo;
         }
+
+        public async Task<List<EstateObjectViewModel>> GetEstateObjectViewModels(List<EstateObject> estateObjects)
+        {
+            using (Agency db = new Agency())
+            {
+                List<EstateObjectViewModel> list = new List<EstateObjectViewModel>();
+                foreach (var ob in estateObjects)
+                {
+                    EstateObject eo = await db.EstateObjects.FirstOrDefaultAsync(f => f.Id == ob.Id);
+                    list.Add(await Model(eo));
+                }
+                return list;
+            }
+        }
     }
 }

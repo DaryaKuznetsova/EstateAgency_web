@@ -5,6 +5,7 @@ namespace EstateAgency
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Mvc;
 
     [Table("EstateObject")]
     public partial class EstateObject
@@ -16,6 +17,7 @@ namespace EstateAgency
             Requests = new HashSet<Request>();
         }
 
+        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
         [Required]
         public double Price { get; set; }

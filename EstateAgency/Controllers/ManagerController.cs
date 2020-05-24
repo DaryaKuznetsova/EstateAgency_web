@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace EstateAgency.Controllers
 {
+    [Authorize]
     public class ManagerController : Controller
     {
         private readonly TradeService tradeService;
@@ -35,7 +36,8 @@ namespace EstateAgency.Controllers
         public async Task<ActionResult> Requests()
         {
             List<EstateObject> estateObjects = await eoService.GetEstateObjects(2);
-            return View(estateObjects);
+            List<EstateObjectViewModel> list = await eoService.GetEstateObjectViewModels(estateObjects);
+            return View(list);
         }
 
         public async Task<ActionResult> ViewRequest(int id)
@@ -125,7 +127,7 @@ namespace EstateAgency.Controllers
         [HttpPost]
         public ActionResult Reports(ReportViewModel model)
         {
-            string templatePath = Server.MapPath("~/Files/MyTemplate2.docx");
+            string templatePath = Server.MapPath("~/Files/MyTemplate.docx");
             DateTime date = DateTime.Now;
             CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
             string d = date.ToString("o", culture);

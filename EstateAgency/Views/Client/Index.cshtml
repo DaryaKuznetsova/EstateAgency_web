@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EstateAgency.EstateObject>
+﻿@model IEnumerable<EstateAgency.ViewModel.EstateObjectViewModel>
 
 
 @{
@@ -12,38 +12,50 @@
 <table class="table">
     <tr>
         <th>
-            Id
+
         </th>
         <th>
-            Price
+            Описание
         </th>
         <th>
-            Area
+
         </th>
         <th>
-            Address
+            Цена
+        </th>
+        <th>
+            Площадь
+        </th>
+        <th>
+            Адрес
         </th>
     </tr>
 
-    @foreach (EstateAgency.EstateObject e in Model)
+    @foreach (var e in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(m => e.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(m => e.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(m => e.Area)
-            </td>
-            <td>
-                @Html.DisplayFor(m => e.Address)
-            </td>
-            <td>
-                @Html.ActionLink("Подробнее", "Buy", new { id = e.Id })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(m => e.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(m => e.RealtyType)
+        </td>
+        <td>
+            @Html.DisplayFor(m => e.TradeType)
+        </td>
+        <td>
+            @Html.DisplayFor(m => e.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(m => e.Area)
+        </td>
+        <td>
+            @Html.DisplayFor(m => e.Address)
+        </td>
+        <td>
+            @Html.ActionLink("Подробнее", "Buy", new { id = e.Id })
+        </td>
+    </tr>
     }
 
 </table>

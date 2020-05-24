@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace EstateAgency.Controllers
 {
+    [Authorize]
     public class ClientController : Controller
     {
         private readonly EstateObjectService _estateObjectService;
@@ -20,11 +21,12 @@ namespace EstateAgency.Controllers
             _estateObjectService = new EstateObjectService();
             _tradeService = new TradeService();
         }
-        // GET: Client
+        
         public async Task<ActionResult> Index()
         {
             var estateObjects = await _estateObjectService.GetEstateObjects();
-            return View(estateObjects);
+            List<EstateObjectViewModel> models = await _estateObjectService.GetEstateObjectViewModels(estateObjects);
+            return View(models);
         }
 
         public ActionResult Filter()
@@ -52,14 +54,15 @@ namespace EstateAgency.Controllers
         }
 
         [HttpPost]
-        public ActionResult Filter(FilterViewModel filterViewModel)
+        public async Task< ActionResult> Filter(FilterViewModel filterViewModel)
         {
             Agency db = new Agency();
             if (!ModelState.IsValid)
                 return RedirectToAction("Filter");
             var res = EstateObjectsRepository.SelectEstateObjects(1, filterViewModel.RealtyTypeId, filterViewModel.TradeTypeId,
                 filterViewModel.MinPrice, filterViewModel.MaxPrice, filterViewModel.MinArea, filterViewModel.MaxArea, filterViewModel.SelectedDistricts);
-            return View("Index", res);
+            List<EstateObjectViewModel> models = await _estateObjectService.GetEstateObjectViewModels(res);
+            return View("Index", models);
         }
 
         public async Task<ActionResult> Buy(int id)
@@ -83,7 +86,8 @@ namespace EstateAgency.Controllers
         {
             int clientId = Convert.ToInt32(User.Identity.Name);
             var estateObjects = await _tradeService.GetClientRequests(clientId, 2);
-            return View(estateObjects);
+            List<EstateObjectViewModel> models = await _estateObjectService.GetEstateObjectViewModels(estateObjects);
+            return View(models);
         }
 
         public async Task<ActionResult> DeleteRequest(int id)
@@ -140,14 +144,16 @@ namespace EstateAgency.Controllers
         {
             int clientId = Convert.ToInt32(User.Identity.Name);
             var estateObjects = await _tradeService.GetClientRequests(clientId, 3);
-            return View(estateObjects);
+            List<EstateObjectViewModel> models = await _estateObjectService.GetEstateObjectViewModels(estateObjects);
+            return View(models);
         }
 
         public async Task<ActionResult> Trades()
         {
             int clientId = Convert.ToInt32(User.Identity.Name);
             var estateObjects = await _tradeService.GetClientTrades(clientId);
-            return View(estateObjects);
+            List<EstateObjectViewModel> models = await _estateObjectService.GetEstateObjectViewModels(estateObjects);
+            return View(models);
         }
 
         public async Task<ActionResult> ViewTrade(int id)

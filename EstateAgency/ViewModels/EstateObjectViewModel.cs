@@ -13,6 +13,7 @@ namespace EstateAgency.ViewModel
         public string ButtonTitle { get; set; }
         public string RedirectUrl { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
         [Display(Name="Цена")]
