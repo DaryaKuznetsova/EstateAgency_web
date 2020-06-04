@@ -18,13 +18,34 @@
                 </button>
             </div>
             <div class="navbar-collapse collapse">
+                @{
+                    int id = Convert.ToInt32(User.Identity.Name);
+                    string name;
+                    int actR, subR;
+                    using (Agency db = new Agency())
+                    {
+                        name = db.Clients.FirstOrDefault(s => s.Id == id).Name;
+                        var result = from EstateObject in db.EstateObjects
+                                     join Request in db.Requests on EstateObject.Id equals Request.EstateObjectId
+                                     where Request.ClientId == id && EstateObject.StatusId == 2
+                                     select EstateObject;
+                        actR = result.Count();
+                        result = from EstateObject in db.EstateObjects
+                                 join Request in db.Requests on EstateObject.Id equals Request.EstateObjectId
+                                 where Request.ClientId == id && EstateObject.StatusId == 3
+                                 select EstateObject;
+                        subR = result.Count();
+                    }
+
+                }
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Каталог", "Index", "Client")</li>
-                    <li>@Html.ActionLink("Активные заявки", "Requests", "Client")</li>
-                    <li>@Html.ActionLink("Принятые заявки", "AcceptedRequests", "Client")</li>
+                    <li>@Html.ActionLink("Активные заявки: "+actR, "Requests", "Client")</li>
+                    <li>@Html.ActionLink("Принятые заявки: "+subR, "AcceptedRequests", "Client")</li>
                     <li>@Html.ActionLink("Мои сделки", "Trades", "Client")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Здравствуйте, " + name, "Index", "Client")</li>
                     <li>@Html.ActionLink("Выход", "Logoff", "Account")</li>
                 </ul>
             </div>

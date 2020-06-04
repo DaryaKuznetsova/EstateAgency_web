@@ -14,6 +14,10 @@
 
     <hr />
 
+        DateTime lastMonth = DateTime.Today.AddMonths(-1);
+        DateTime last3Months = DateTime.Today.AddMonths(-3);
+        DateTime lastYear = DateTime.Today.AddYears(-1);
+
     <div class="form-horizontal">
         <div class="form-group">
             @Html.Label("От", htmlAttributes: new { @class = "control-label col-md-1" })
@@ -31,12 +35,25 @@
             </div>
         </div>
 
+        <div>
+            @Html.ActionLink("За последний месяц", "Statistics", new { first = lastMonth.ToShortDateString(), second = DateTime.Now.ToShortDateString() })
+        </div>
+        <div>
+            @Html.ActionLink("За последние три месяца", "Statistics", new { first = last3Months.ToShortDateString(), second = DateTime.Now.ToShortDateString() })
+        </div>
+        <div>
+            @Html.ActionLink("За год", "Statistics", new { first = lastYear.ToShortDateString(), second = DateTime.Now.ToShortDateString() })
+        </div>
+       
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Показать" class="btn btn-default" />
             </div>
         </div>
     </div>
+
+
 }
 
 <!DOCTYPE html>

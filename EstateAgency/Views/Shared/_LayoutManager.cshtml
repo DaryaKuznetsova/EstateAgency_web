@@ -17,15 +17,28 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
+            @{
+                int id = Convert.ToInt32(User.Identity.Name);
+                string name;
+                int r;
+                using (Agency db = new Agency())
+                {
+                    name = db.Managers.FirstOrDefault(s => s.Id == id).Name;
+                    var req = db.EstateObjects.Where(e => e.StatusId == 2);
+                    r = req.Count();
+                }
+
+            }
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Каталог", "Index", "EstateObject")</li>
-                    <li>@Html.ActionLink("Заявки", "Requests", "Manager")</li>
+                    <li>@Html.ActionLink("Заявки: "+r, "Requests", "Manager")</li>
                     <li>@Html.ActionLink("Сделки", "Trades", "Manager")</li>
                     <li>@Html.ActionLink("Отчеты", "Reports", "Manager")</li>
                     <li>@Html.ActionLink("Статистика", "Statistics", "Manager")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Здравствуйте, " + name, "Index", "Manager")</li>
                     <li>@Html.ActionLink("Выход", "Logoff", "Account")</li>
                 </ul>
             </div>

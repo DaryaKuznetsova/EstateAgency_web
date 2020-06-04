@@ -10,7 +10,6 @@ using System.Web.Security;
 
 namespace EstateAgency.Controllers
 {
-   // [Authorize]
     public class AccountController : Controller
     {
         private readonly AccountRepository accountRepository;

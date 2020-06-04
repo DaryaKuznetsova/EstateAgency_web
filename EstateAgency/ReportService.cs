@@ -17,13 +17,18 @@ namespace EstateAgency
         public List<string> Managers()
         {
             List<string> managers = new List<string>();
+            managersId = new List<int>();
 
             using (Agency db = new Agency())
             {
                 var result = from Manager in db.Managers
-                             select Manager.Surname ;
+                             select Manager ;
                 foreach (var s in result)
-                    managers.Add(s.ToString());
+                {
+                    managers.Add(s.Surname.ToString());
+                    managersId.Add(s.Id);
+                }
+
                 return managers;
             }
         }
@@ -33,9 +38,9 @@ namespace EstateAgency
             List<int> counts = new List<int>();
             using (Agency db = new Agency())
             {
-                var managers = from Manager in db.Managers
-                             select Manager.Id;
-                foreach (var id in managers)
+                //var managers = from Manager in db.Managers
+                //             select Manager.Id;
+                foreach (var id in managersId)
                 {
                     var number = from trade in db.Trades
                                  join estateObject in db.EstateObjects on trade.EstateObjectId equals estateObject.Id

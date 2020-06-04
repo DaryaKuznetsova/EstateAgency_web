@@ -115,12 +115,29 @@ namespace EstateAgency.Controllers
             return RedirectToAction("Trades");
         }
 
-        public ActionResult Reports()
+        //public ActionResult Reports()
+        //{
+        //    ReportViewModel model = new ReportViewModel();
+        //    model.Managers = reportService.ManagersList();
+        //    model.FirstDate = DateTime.Today;
+        //    model.SecondDate = DateTime.Today;
+        //    return View(model);
+        //}
+
+        public ActionResult Reports(string first, string second)
         {
             ReportViewModel model = new ReportViewModel();
             model.Managers = reportService.ManagersList();
-            model.FirstDate = DateTime.Today;
-            model.SecondDate = DateTime.Today;
+            if(first==null)
+            {
+                model.FirstDate = DateTime.Today;
+                model.SecondDate = DateTime.Today;
+            }
+            else
+            {
+                model.FirstDate = Convert.ToDateTime(first);
+                model.SecondDate = Convert.ToDateTime(second);
+            }
             return View(model);
         }
 
@@ -164,9 +181,22 @@ namespace EstateAgency.Controllers
             return File(model.FilePath, file_type, model.FileName);
         }
 
-        public ActionResult Statistics()
+
+        public ActionResult Statistics(string first, string second)
         {
             ReportViewModel model = new ReportViewModel();
+
+            if(first!=null)
+            {
+                model.FirstDate = Convert.ToDateTime(first);
+                model.SecondDate = Convert.ToDateTime(second);
+            }
+            else
+            {
+                model.FirstDate = DateTime.Today;
+                model.SecondDate = DateTime.Today;
+            }
+
             return View(model);
         }
 

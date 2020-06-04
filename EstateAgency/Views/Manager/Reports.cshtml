@@ -6,12 +6,15 @@
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>Сделки</h2>
+<h2>Отчет по сделкам</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
+    DateTime lastMonth = DateTime.Today.AddMonths(-1);
+    DateTime last3Months = DateTime.Today.AddMonths(-3);
+    DateTime lastYear = DateTime.Today.AddYears(-1);
 
 <div class="form-horizontal">
     <div class="form-group">
@@ -30,6 +33,16 @@
         </div>
     </div>
 
+    <div>
+        @Html.ActionLink("За последний месяц", "Reports", new { first = lastMonth.ToShortDateString(), second = DateTime.Now.ToShortDateString() })
+    </div>
+    <div>
+        @Html.ActionLink("За последние три месяца", "Reports", new { first = last3Months.ToShortDateString(), second = DateTime.Now.ToShortDateString() })
+    </div>
+    <div>
+        @Html.ActionLink("За год", "Reports", new { first = lastYear.ToShortDateString(), second = DateTime.Now.ToShortDateString() })
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(model => model.Managers, "Менеджер", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -37,6 +50,7 @@
             @Html.ValidationMessageFor(model => model.ManagerId, "", new { @class = "text-danger" })
         </div>
     </div>
+
 
     @*@Html.HiddenFor(model => model.ManagerId)*@
 

@@ -247,6 +247,7 @@ namespace EstateAgency
                     TradeRequestViewModel model = await Model(eo);
                     myTrades.Add(model);
                 }
+                myTrades.Reverse();
                 return myTrades;
             }
         }
